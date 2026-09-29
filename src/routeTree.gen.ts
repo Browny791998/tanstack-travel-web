@@ -9,154 +9,38 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WishlistRouteImport } from './routes/wishlist'
-import { Route as TripsRouteImport } from './routes/trips'
-import { Route as TravelRouteImport } from './routes/travel'
-import { Route as FlightsRouteImport } from './routes/flights'
-import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DestinationsIdRouteImport } from './routes/destinations.$id'
 
-const WishlistRoute = WishlistRouteImport.update({
-  id: '/wishlist',
-  path: '/wishlist',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TripsRoute = TripsRouteImport.update({
-  id: '/trips',
-  path: '/trips',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TravelRoute = TravelRouteImport.update({
-  id: '/travel',
-  path: '/travel',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FlightsRoute = FlightsRouteImport.update({
-  id: '/flights',
-  path: '/flights',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DestinationsRoute = DestinationsRouteImport.update({
-  id: '/destinations',
-  path: '/destinations',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DestinationsIdRoute = DestinationsIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => DestinationsRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/destinations': typeof DestinationsRouteWithChildren
-  '/flights': typeof FlightsRoute
-  '/travel': typeof TravelRoute
-  '/trips': typeof TripsRoute
-  '/wishlist': typeof WishlistRoute
-  '/destinations/$id': typeof DestinationsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/destinations': typeof DestinationsRouteWithChildren
-  '/flights': typeof FlightsRoute
-  '/travel': typeof TravelRoute
-  '/trips': typeof TripsRoute
-  '/wishlist': typeof WishlistRoute
-  '/destinations/$id': typeof DestinationsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/destinations': typeof DestinationsRouteWithChildren
-  '/flights': typeof FlightsRoute
-  '/travel': typeof TravelRoute
-  '/trips': typeof TripsRoute
-  '/wishlist': typeof WishlistRoute
-  '/destinations/$id': typeof DestinationsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/destinations'
-    | '/flights'
-    | '/travel'
-    | '/trips'
-    | '/wishlist'
-    | '/destinations/$id'
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/destinations'
-    | '/flights'
-    | '/travel'
-    | '/trips'
-    | '/wishlist'
-    | '/destinations/$id'
-  id:
-    | '__root__'
-    | '/'
-    | '/destinations'
-    | '/flights'
-    | '/travel'
-    | '/trips'
-    | '/wishlist'
-    | '/destinations/$id'
+  to: '/'
+  id: '__root__' | '/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DestinationsRoute: typeof DestinationsRouteWithChildren
-  FlightsRoute: typeof FlightsRoute
-  TravelRoute: typeof TravelRoute
-  TripsRoute: typeof TripsRoute
-  WishlistRoute: typeof WishlistRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/wishlist': {
-      id: '/wishlist'
-      path: '/wishlist'
-      fullPath: '/wishlist'
-      preLoaderRoute: typeof WishlistRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/trips': {
-      id: '/trips'
-      path: '/trips'
-      fullPath: '/trips'
-      preLoaderRoute: typeof TripsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/travel': {
-      id: '/travel'
-      path: '/travel'
-      fullPath: '/travel'
-      preLoaderRoute: typeof TravelRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/flights': {
-      id: '/flights'
-      path: '/flights'
-      fullPath: '/flights'
-      preLoaderRoute: typeof FlightsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/destinations': {
-      id: '/destinations'
-      path: '/destinations'
-      fullPath: '/destinations'
-      preLoaderRoute: typeof DestinationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -164,35 +48,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/destinations/$id': {
-      id: '/destinations/$id'
-      path: '/$id'
-      fullPath: '/destinations/$id'
-      preLoaderRoute: typeof DestinationsIdRouteImport
-      parentRoute: typeof DestinationsRoute
-    }
   }
 }
 
-interface DestinationsRouteChildren {
-  DestinationsIdRoute: typeof DestinationsIdRoute
-}
-
-const DestinationsRouteChildren: DestinationsRouteChildren = {
-  DestinationsIdRoute: DestinationsIdRoute,
-}
-
-const DestinationsRouteWithChildren = DestinationsRoute._addFileChildren(
-  DestinationsRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DestinationsRoute: DestinationsRouteWithChildren,
-  FlightsRoute: FlightsRoute,
-  TravelRoute: TravelRoute,
-  TripsRoute: TripsRoute,
-  WishlistRoute: WishlistRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
