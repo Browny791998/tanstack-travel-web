@@ -9,38 +9,170 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PostsRouteImport } from './routes/posts'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as PathlessLayoutRouteImport } from './routes/_pathlessLayout'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PostsIndexRouteImport } from './routes/posts.index'
+import { Route as ProductsChar123CategoryChar125RouteImport } from './routes/products.{-$category}'
+import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
+import { Route as PostsSplatRouteImport } from './routes/posts.$'
+import { Route as PathlessLayoutDashboardRouteImport } from './routes/_pathlessLayout.dashboard'
+import { Route as PostsPostIdEditRouteImport } from './routes/posts_.$postId.edit'
 
+const PostsRoute = PostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PathlessLayoutRoute = PathlessLayoutRouteImport.update({
+  id: '/_pathlessLayout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PostsIndexRoute = PostsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PostsRoute,
+} as any)
+const ProductsChar123CategoryChar125Route =
+  ProductsChar123CategoryChar125RouteImport.update({
+    id: '/products/{-$category}',
+    path: '/products/{-$category}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PostsPostIdRoute = PostsPostIdRouteImport.update({
+  id: '/$postId',
+  path: '/$postId',
+  getParentRoute: () => PostsRoute,
+} as any)
+const PostsSplatRoute = PostsSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => PostsRoute,
+} as any)
+const PathlessLayoutDashboardRoute = PathlessLayoutDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => PathlessLayoutRoute,
+} as any)
+const PostsPostIdEditRoute = PostsPostIdEditRouteImport.update({
+  id: '/posts_/$postId/edit',
+  path: '/posts/$postId/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/posts': typeof PostsRouteWithChildren
+  '/dashboard': typeof PathlessLayoutDashboardRoute
+  '/posts/$': typeof PostsSplatRoute
+  '/posts/$postId': typeof PostsPostIdRoute
+  '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
+  '/posts/': typeof PostsIndexRoute
+  '/posts/$postId/edit': typeof PostsPostIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/dashboard': typeof PathlessLayoutDashboardRoute
+  '/posts/$': typeof PostsSplatRoute
+  '/posts/$postId': typeof PostsPostIdRoute
+  '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
+  '/posts': typeof PostsIndexRoute
+  '/posts/$postId/edit': typeof PostsPostIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_pathlessLayout': typeof PathlessLayoutRouteWithChildren
+  '/about': typeof AboutRoute
+  '/posts': typeof PostsRouteWithChildren
+  '/_pathlessLayout/dashboard': typeof PathlessLayoutDashboardRoute
+  '/posts/$': typeof PostsSplatRoute
+  '/posts/$postId': typeof PostsPostIdRoute
+  '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
+  '/posts/': typeof PostsIndexRoute
+  '/posts_/$postId/edit': typeof PostsPostIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/posts'
+    | '/dashboard'
+    | '/posts/$'
+    | '/posts/$postId'
+    | '/products/{-$category}'
+    | '/posts/'
+    | '/posts/$postId/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/posts/$'
+    | '/posts/$postId'
+    | '/products/{-$category}'
+    | '/posts'
+    | '/posts/$postId/edit'
+  id:
+    | '__root__'
+    | '/'
+    | '/_pathlessLayout'
+    | '/about'
+    | '/posts'
+    | '/_pathlessLayout/dashboard'
+    | '/posts/$'
+    | '/posts/$postId'
+    | '/products/{-$category}'
+    | '/posts/'
+    | '/posts_/$postId/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
+  AboutRoute: typeof AboutRoute
+  PostsRoute: typeof PostsRouteWithChildren
+  ProductsChar123CategoryChar125Route: typeof ProductsChar123CategoryChar125Route
+  PostsPostIdEditRoute: typeof PostsPostIdEditRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/posts': {
+      id: '/posts'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_pathlessLayout': {
+      id: '/_pathlessLayout'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PathlessLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +180,84 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/posts/': {
+      id: '/posts/'
+      path: '/'
+      fullPath: '/posts/'
+      preLoaderRoute: typeof PostsIndexRouteImport
+      parentRoute: typeof PostsRoute
+    }
+    '/products/{-$category}': {
+      id: '/products/{-$category}'
+      path: '/products/{-$category}'
+      fullPath: '/products/{-$category}'
+      preLoaderRoute: typeof ProductsChar123CategoryChar125RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/posts/$postId': {
+      id: '/posts/$postId'
+      path: '/$postId'
+      fullPath: '/posts/$postId'
+      preLoaderRoute: typeof PostsPostIdRouteImport
+      parentRoute: typeof PostsRoute
+    }
+    '/posts/$': {
+      id: '/posts/$'
+      path: '/$'
+      fullPath: '/posts/$'
+      preLoaderRoute: typeof PostsSplatRouteImport
+      parentRoute: typeof PostsRoute
+    }
+    '/_pathlessLayout/dashboard': {
+      id: '/_pathlessLayout/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof PathlessLayoutDashboardRouteImport
+      parentRoute: typeof PathlessLayoutRoute
+    }
+    '/posts_/$postId/edit': {
+      id: '/posts_/$postId/edit'
+      path: '/posts/$postId/edit'
+      fullPath: '/posts/$postId/edit'
+      preLoaderRoute: typeof PostsPostIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface PathlessLayoutRouteChildren {
+  PathlessLayoutDashboardRoute: typeof PathlessLayoutDashboardRoute
+}
+
+const PathlessLayoutRouteChildren: PathlessLayoutRouteChildren = {
+  PathlessLayoutDashboardRoute: PathlessLayoutDashboardRoute,
+}
+
+const PathlessLayoutRouteWithChildren = PathlessLayoutRoute._addFileChildren(
+  PathlessLayoutRouteChildren,
+)
+
+interface PostsRouteChildren {
+  PostsSplatRoute: typeof PostsSplatRoute
+  PostsPostIdRoute: typeof PostsPostIdRoute
+  PostsIndexRoute: typeof PostsIndexRoute
+}
+
+const PostsRouteChildren: PostsRouteChildren = {
+  PostsSplatRoute: PostsSplatRoute,
+  PostsPostIdRoute: PostsPostIdRoute,
+  PostsIndexRoute: PostsIndexRoute,
+}
+
+const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
+  AboutRoute: AboutRoute,
+  PostsRoute: PostsRouteWithChildren,
+  ProductsChar123CategoryChar125Route: ProductsChar123CategoryChar125Route,
+  PostsPostIdEditRoute: PostsPostIdEditRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
