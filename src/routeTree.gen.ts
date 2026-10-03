@@ -10,19 +10,28 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PostsRouteImport } from './routes/posts'
+import { Route as NavRouteImport } from './routes/nav'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as PathlessLayoutRouteImport } from './routes/_pathlessLayout'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostsIndexRouteImport } from './routes/posts.index'
+import { Route as NavIndexRouteImport } from './routes/nav.index'
 import { Route as ProductsChar123CategoryChar125RouteImport } from './routes/products.{-$category}'
 import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
 import { Route as PostsSplatRouteImport } from './routes/posts.$'
+import { Route as NavSearchRouteImport } from './routes/nav.search'
+import { Route as NavRedirectRouteImport } from './routes/nav.redirect'
 import { Route as PathlessLayoutDashboardRouteImport } from './routes/_pathlessLayout.dashboard'
 import { Route as PostsPostIdEditRouteImport } from './routes/posts_.$postId.edit'
 
 const PostsRoute = PostsRouteImport.update({
   id: '/posts',
   path: '/posts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NavRoute = NavRouteImport.update({
+  id: '/nav',
+  path: '/nav',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -44,6 +53,11 @@ const PostsIndexRoute = PostsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PostsRoute,
 } as any)
+const NavIndexRoute = NavIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => NavRoute,
+} as any)
 const ProductsChar123CategoryChar125Route =
   ProductsChar123CategoryChar125RouteImport.update({
     id: '/products/{-$category}',
@@ -60,6 +74,16 @@ const PostsSplatRoute = PostsSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => PostsRoute,
 } as any)
+const NavSearchRoute = NavSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => NavRoute,
+} as any)
+const NavRedirectRoute = NavRedirectRouteImport.update({
+  id: '/redirect',
+  path: '/redirect',
+  getParentRoute: () => NavRoute,
+} as any)
 const PathlessLayoutDashboardRoute = PathlessLayoutDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -74,11 +98,15 @@ const PostsPostIdEditRoute = PostsPostIdEditRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/nav': typeof NavRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
   '/dashboard': typeof PathlessLayoutDashboardRoute
+  '/nav/redirect': typeof NavRedirectRoute
+  '/nav/search': typeof NavSearchRoute
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
+  '/nav/': typeof NavIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/posts/$postId/edit': typeof PostsPostIdEditRoute
 }
@@ -86,9 +114,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/dashboard': typeof PathlessLayoutDashboardRoute
+  '/nav/redirect': typeof NavRedirectRoute
+  '/nav/search': typeof NavSearchRoute
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
+  '/nav': typeof NavIndexRoute
   '/posts': typeof PostsIndexRoute
   '/posts/$postId/edit': typeof PostsPostIdEditRoute
 }
@@ -97,11 +128,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_pathlessLayout': typeof PathlessLayoutRouteWithChildren
   '/about': typeof AboutRoute
+  '/nav': typeof NavRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
   '/_pathlessLayout/dashboard': typeof PathlessLayoutDashboardRoute
+  '/nav/redirect': typeof NavRedirectRoute
+  '/nav/search': typeof NavSearchRoute
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
+  '/nav/': typeof NavIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/posts_/$postId/edit': typeof PostsPostIdEditRoute
 }
@@ -110,11 +145,15 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/nav'
     | '/posts'
     | '/dashboard'
+    | '/nav/redirect'
+    | '/nav/search'
     | '/posts/$'
     | '/posts/$postId'
     | '/products/{-$category}'
+    | '/nav/'
     | '/posts/'
     | '/posts/$postId/edit'
   fileRoutesByTo: FileRoutesByTo
@@ -122,9 +161,12 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/dashboard'
+    | '/nav/redirect'
+    | '/nav/search'
     | '/posts/$'
     | '/posts/$postId'
     | '/products/{-$category}'
+    | '/nav'
     | '/posts'
     | '/posts/$postId/edit'
   id:
@@ -132,11 +174,15 @@ export interface FileRouteTypes {
     | '/'
     | '/_pathlessLayout'
     | '/about'
+    | '/nav'
     | '/posts'
     | '/_pathlessLayout/dashboard'
+    | '/nav/redirect'
+    | '/nav/search'
     | '/posts/$'
     | '/posts/$postId'
     | '/products/{-$category}'
+    | '/nav/'
     | '/posts/'
     | '/posts_/$postId/edit'
   fileRoutesById: FileRoutesById
@@ -145,6 +191,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
   AboutRoute: typeof AboutRoute
+  NavRoute: typeof NavRouteWithChildren
   PostsRoute: typeof PostsRouteWithChildren
   ProductsChar123CategoryChar125Route: typeof ProductsChar123CategoryChar125Route
   PostsPostIdEditRoute: typeof PostsPostIdEditRoute
@@ -157,6 +204,13 @@ declare module '@tanstack/react-router' {
       path: '/posts'
       fullPath: '/posts'
       preLoaderRoute: typeof PostsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nav': {
+      id: '/nav'
+      path: '/nav'
+      fullPath: '/nav'
+      preLoaderRoute: typeof NavRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -187,6 +241,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsIndexRouteImport
       parentRoute: typeof PostsRoute
     }
+    '/nav/': {
+      id: '/nav/'
+      path: '/'
+      fullPath: '/nav/'
+      preLoaderRoute: typeof NavIndexRouteImport
+      parentRoute: typeof NavRoute
+    }
     '/products/{-$category}': {
       id: '/products/{-$category}'
       path: '/products/{-$category}'
@@ -207,6 +268,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/posts/$'
       preLoaderRoute: typeof PostsSplatRouteImport
       parentRoute: typeof PostsRoute
+    }
+    '/nav/search': {
+      id: '/nav/search'
+      path: '/search'
+      fullPath: '/nav/search'
+      preLoaderRoute: typeof NavSearchRouteImport
+      parentRoute: typeof NavRoute
+    }
+    '/nav/redirect': {
+      id: '/nav/redirect'
+      path: '/redirect'
+      fullPath: '/nav/redirect'
+      preLoaderRoute: typeof NavRedirectRouteImport
+      parentRoute: typeof NavRoute
     }
     '/_pathlessLayout/dashboard': {
       id: '/_pathlessLayout/dashboard'
@@ -237,6 +312,20 @@ const PathlessLayoutRouteWithChildren = PathlessLayoutRoute._addFileChildren(
   PathlessLayoutRouteChildren,
 )
 
+interface NavRouteChildren {
+  NavRedirectRoute: typeof NavRedirectRoute
+  NavSearchRoute: typeof NavSearchRoute
+  NavIndexRoute: typeof NavIndexRoute
+}
+
+const NavRouteChildren: NavRouteChildren = {
+  NavRedirectRoute: NavRedirectRoute,
+  NavSearchRoute: NavSearchRoute,
+  NavIndexRoute: NavIndexRoute,
+}
+
+const NavRouteWithChildren = NavRoute._addFileChildren(NavRouteChildren)
+
 interface PostsRouteChildren {
   PostsSplatRoute: typeof PostsSplatRoute
   PostsPostIdRoute: typeof PostsPostIdRoute
@@ -255,6 +344,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
   AboutRoute: AboutRoute,
+  NavRoute: NavRouteWithChildren,
   PostsRoute: PostsRouteWithChildren,
   ProductsChar123CategoryChar125Route: ProductsChar123CategoryChar125Route,
   PostsPostIdEditRoute: PostsPostIdEditRoute,

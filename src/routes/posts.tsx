@@ -11,7 +11,10 @@ function PostsLayoutComponent() {
 			<h1 className="font-bold">Posts</h1>
 			<nav className="flex gap-3 text-blue-600 underline">
 				<Link to="/posts">All posts</Link>
-				<Link to="/posts/$postId" params={{ postId: "1" }}>
+				<Link
+					to="/posts/$postId"
+					params={{ postId: "11111111-1111-1111-1111-111111111111" }}
+				>
 					Post 1
 				</Link>
 			</nav>
