@@ -52,7 +52,6 @@ function ProductsComponent() {
 				<h2 className="font-bold">{"<Link search> examples"}</h2>
 				<ul className="mt-1 flex flex-col gap-1 text-blue-600 underline">
 					<li>
-						
 						{/* from + omitted `to`: next page using a function updater */}
 						<Link
 							from={Route.fullPath}

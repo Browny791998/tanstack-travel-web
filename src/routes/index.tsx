@@ -42,6 +42,9 @@ function Home() {
 						/shop/products — search params examples
 					</Link>
 				</li>
+				<li>
+					<Link to="/photos">/photos — route masking examples</Link>
+				</li>
 			</ul>
 			<p className="mt-4 text-sm text-gray-500">
 				Also try visiting these directly in the address bar:

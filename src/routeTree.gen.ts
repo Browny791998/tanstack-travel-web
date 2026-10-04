@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PostsRouteImport } from './routes/posts'
+import { Route as PhotosRouteImport } from './routes/photos'
 import { Route as NavRouteImport } from './routes/nav'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as PathlessLayoutRouteImport } from './routes/_pathlessLayout'
@@ -20,15 +21,22 @@ import { Route as ShopProductsRouteImport } from './routes/shop.products'
 import { Route as ProductsChar123CategoryChar125RouteImport } from './routes/products.{-$category}'
 import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
 import { Route as PostsSplatRouteImport } from './routes/posts.$'
+import { Route as PhotosPhotoIdRouteImport } from './routes/photos.$photoId'
 import { Route as NavSearchRouteImport } from './routes/nav.search'
 import { Route as NavRedirectRouteImport } from './routes/nav.redirect'
 import { Route as PathlessLayoutDashboardRouteImport } from './routes/_pathlessLayout.dashboard'
 import { Route as ShopProductsProductIdRouteImport } from './routes/shop.products.$productId'
 import { Route as PostsPostIdEditRouteImport } from './routes/posts_.$postId.edit'
+import { Route as PhotosPhotoIdModalRouteImport } from './routes/photos.$photoId.modal'
 
 const PostsRoute = PostsRouteImport.update({
   id: '/posts',
   path: '/posts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PhotosRoute = PhotosRouteImport.update({
+  id: '/photos',
+  path: '/photos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NavRoute = NavRouteImport.update({
@@ -81,6 +89,11 @@ const PostsSplatRoute = PostsSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => PostsRoute,
 } as any)
+const PhotosPhotoIdRoute = PhotosPhotoIdRouteImport.update({
+  id: '/$photoId',
+  path: '/$photoId',
+  getParentRoute: () => PhotosRoute,
+} as any)
 const NavSearchRoute = NavSearchRouteImport.update({
   id: '/search',
   path: '/search',
@@ -106,36 +119,47 @@ const PostsPostIdEditRoute = PostsPostIdEditRouteImport.update({
   path: '/posts/$postId/edit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PhotosPhotoIdModalRoute = PhotosPhotoIdModalRouteImport.update({
+  id: '/modal',
+  path: '/modal',
+  getParentRoute: () => PhotosPhotoIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/nav': typeof NavRouteWithChildren
+  '/photos': typeof PhotosRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
   '/dashboard': typeof PathlessLayoutDashboardRoute
   '/nav/redirect': typeof NavRedirectRoute
   '/nav/search': typeof NavSearchRoute
+  '/photos/$photoId': typeof PhotosPhotoIdRouteWithChildren
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
   '/shop/products': typeof ShopProductsRouteWithChildren
   '/nav/': typeof NavIndexRoute
   '/posts/': typeof PostsIndexRoute
+  '/photos/$photoId/modal': typeof PhotosPhotoIdModalRoute
   '/posts/$postId/edit': typeof PostsPostIdEditRoute
   '/shop/products/$productId': typeof ShopProductsProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/photos': typeof PhotosRouteWithChildren
   '/dashboard': typeof PathlessLayoutDashboardRoute
   '/nav/redirect': typeof NavRedirectRoute
   '/nav/search': typeof NavSearchRoute
+  '/photos/$photoId': typeof PhotosPhotoIdRouteWithChildren
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
   '/shop/products': typeof ShopProductsRouteWithChildren
   '/nav': typeof NavIndexRoute
   '/posts': typeof PostsIndexRoute
+  '/photos/$photoId/modal': typeof PhotosPhotoIdModalRoute
   '/posts/$postId/edit': typeof PostsPostIdEditRoute
   '/shop/products/$productId': typeof ShopProductsProductIdRoute
 }
@@ -145,16 +169,19 @@ export interface FileRoutesById {
   '/_pathlessLayout': typeof PathlessLayoutRouteWithChildren
   '/about': typeof AboutRoute
   '/nav': typeof NavRouteWithChildren
+  '/photos': typeof PhotosRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
   '/_pathlessLayout/dashboard': typeof PathlessLayoutDashboardRoute
   '/nav/redirect': typeof NavRedirectRoute
   '/nav/search': typeof NavSearchRoute
+  '/photos/$photoId': typeof PhotosPhotoIdRouteWithChildren
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
   '/shop/products': typeof ShopProductsRouteWithChildren
   '/nav/': typeof NavIndexRoute
   '/posts/': typeof PostsIndexRoute
+  '/photos/$photoId/modal': typeof PhotosPhotoIdModalRoute
   '/posts_/$postId/edit': typeof PostsPostIdEditRoute
   '/shop/products/$productId': typeof ShopProductsProductIdRoute
 }
@@ -164,31 +191,37 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/nav'
+    | '/photos'
     | '/posts'
     | '/dashboard'
     | '/nav/redirect'
     | '/nav/search'
+    | '/photos/$photoId'
     | '/posts/$'
     | '/posts/$postId'
     | '/products/{-$category}'
     | '/shop/products'
     | '/nav/'
     | '/posts/'
+    | '/photos/$photoId/modal'
     | '/posts/$postId/edit'
     | '/shop/products/$productId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/photos'
     | '/dashboard'
     | '/nav/redirect'
     | '/nav/search'
+    | '/photos/$photoId'
     | '/posts/$'
     | '/posts/$postId'
     | '/products/{-$category}'
     | '/shop/products'
     | '/nav'
     | '/posts'
+    | '/photos/$photoId/modal'
     | '/posts/$postId/edit'
     | '/shop/products/$productId'
   id:
@@ -197,16 +230,19 @@ export interface FileRouteTypes {
     | '/_pathlessLayout'
     | '/about'
     | '/nav'
+    | '/photos'
     | '/posts'
     | '/_pathlessLayout/dashboard'
     | '/nav/redirect'
     | '/nav/search'
+    | '/photos/$photoId'
     | '/posts/$'
     | '/posts/$postId'
     | '/products/{-$category}'
     | '/shop/products'
     | '/nav/'
     | '/posts/'
+    | '/photos/$photoId/modal'
     | '/posts_/$postId/edit'
     | '/shop/products/$productId'
   fileRoutesById: FileRoutesById
@@ -216,6 +252,7 @@ export interface RootRouteChildren {
   PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
   AboutRoute: typeof AboutRoute
   NavRoute: typeof NavRouteWithChildren
+  PhotosRoute: typeof PhotosRouteWithChildren
   PostsRoute: typeof PostsRouteWithChildren
   ProductsChar123CategoryChar125Route: typeof ProductsChar123CategoryChar125Route
   ShopProductsRoute: typeof ShopProductsRouteWithChildren
@@ -229,6 +266,13 @@ declare module '@tanstack/react-router' {
       path: '/posts'
       fullPath: '/posts'
       preLoaderRoute: typeof PostsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/photos': {
+      id: '/photos'
+      path: '/photos'
+      fullPath: '/photos'
+      preLoaderRoute: typeof PhotosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/nav': {
@@ -301,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsSplatRouteImport
       parentRoute: typeof PostsRoute
     }
+    '/photos/$photoId': {
+      id: '/photos/$photoId'
+      path: '/$photoId'
+      fullPath: '/photos/$photoId'
+      preLoaderRoute: typeof PhotosPhotoIdRouteImport
+      parentRoute: typeof PhotosRoute
+    }
     '/nav/search': {
       id: '/nav/search'
       path: '/search'
@@ -336,6 +387,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdEditRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/photos/$photoId/modal': {
+      id: '/photos/$photoId/modal'
+      path: '/modal'
+      fullPath: '/photos/$photoId/modal'
+      preLoaderRoute: typeof PhotosPhotoIdModalRouteImport
+      parentRoute: typeof PhotosPhotoIdRoute
+    }
   }
 }
 
@@ -364,6 +422,29 @@ const NavRouteChildren: NavRouteChildren = {
 }
 
 const NavRouteWithChildren = NavRoute._addFileChildren(NavRouteChildren)
+
+interface PhotosPhotoIdRouteChildren {
+  PhotosPhotoIdModalRoute: typeof PhotosPhotoIdModalRoute
+}
+
+const PhotosPhotoIdRouteChildren: PhotosPhotoIdRouteChildren = {
+  PhotosPhotoIdModalRoute: PhotosPhotoIdModalRoute,
+}
+
+const PhotosPhotoIdRouteWithChildren = PhotosPhotoIdRoute._addFileChildren(
+  PhotosPhotoIdRouteChildren,
+)
+
+interface PhotosRouteChildren {
+  PhotosPhotoIdRoute: typeof PhotosPhotoIdRouteWithChildren
+}
+
+const PhotosRouteChildren: PhotosRouteChildren = {
+  PhotosPhotoIdRoute: PhotosPhotoIdRouteWithChildren,
+}
+
+const PhotosRouteWithChildren =
+  PhotosRoute._addFileChildren(PhotosRouteChildren)
 
 interface PostsRouteChildren {
   PostsSplatRoute: typeof PostsSplatRoute
@@ -396,6 +477,7 @@ const rootRouteChildren: RootRouteChildren = {
   PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
   AboutRoute: AboutRoute,
   NavRoute: NavRouteWithChildren,
+  PhotosRoute: PhotosRouteWithChildren,
   PostsRoute: PostsRouteWithChildren,
   ProductsChar123CategoryChar125Route: ProductsChar123CategoryChar125Route,
   ShopProductsRoute: ShopProductsRouteWithChildren,

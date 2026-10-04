@@ -1,8 +1,18 @@
-import { createRouter as createTanStackRouter } from "@tanstack/react-router";
+import {
+	createRouteMask,
+	createRouter as createTanStackRouter,
+} from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 
 const locales = ["en", "fr", "es"];
 const defaultLocale = "en";
+
+const photoModalToPhotoMask = createRouteMask({
+	routeTree,
+	from: "/photos/$photoId/modal",
+	to: "/photos/$photoId",
+	params: (prev) => ({ photoId: prev.photoId }),
+});
 
 function getLocale() {
 	if (typeof localStorage === "undefined") return defaultLocale;
@@ -12,6 +22,7 @@ function getLocale() {
 export function getRouter() {
 	return createTanStackRouter({
 		routeTree,
+		routeMasks: [photoModalToPhotoMask],
 		rewrite: {
 			// Browser URL (/en/about) -> router's internal URL (/about)
 			input: ({ url }) => {
