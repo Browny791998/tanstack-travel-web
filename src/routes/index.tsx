@@ -45,6 +45,16 @@ function Home() {
 				<li>
 					<Link to="/photos">/photos — route masking examples</Link>
 				</li>
+				<li>
+					<Link to="/blocking">
+						/blocking — navigation blocking (useBlocker)
+					</Link>
+				</li>
+				<li>
+					<Link to="/blocking-component">
+						/blocking-component — navigation blocking (Block component)
+					</Link>
+				</li>
 			</ul>
 			<p className="mt-4 text-sm text-gray-500">
 				Also try visiting these directly in the address bar:

@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PostsRouteImport } from './routes/posts'
 import { Route as PhotosRouteImport } from './routes/photos'
 import { Route as NavRouteImport } from './routes/nav'
+import { Route as BlockingComponentRouteImport } from './routes/blocking-component'
+import { Route as BlockingRouteImport } from './routes/blocking'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as PathlessLayoutRouteImport } from './routes/_pathlessLayout'
 import { Route as IndexRouteImport } from './routes/index'
@@ -42,6 +44,16 @@ const PhotosRoute = PhotosRouteImport.update({
 const NavRoute = NavRouteImport.update({
   id: '/nav',
   path: '/nav',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlockingComponentRoute = BlockingComponentRouteImport.update({
+  id: '/blocking-component',
+  path: '/blocking-component',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlockingRoute = BlockingRouteImport.update({
+  id: '/blocking',
+  path: '/blocking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -128,6 +140,8 @@ const PhotosPhotoIdModalRoute = PhotosPhotoIdModalRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blocking': typeof BlockingRoute
+  '/blocking-component': typeof BlockingComponentRoute
   '/nav': typeof NavRouteWithChildren
   '/photos': typeof PhotosRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
@@ -148,6 +162,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blocking': typeof BlockingRoute
+  '/blocking-component': typeof BlockingComponentRoute
   '/photos': typeof PhotosRouteWithChildren
   '/dashboard': typeof PathlessLayoutDashboardRoute
   '/nav/redirect': typeof NavRedirectRoute
@@ -168,6 +184,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_pathlessLayout': typeof PathlessLayoutRouteWithChildren
   '/about': typeof AboutRoute
+  '/blocking': typeof BlockingRoute
+  '/blocking-component': typeof BlockingComponentRoute
   '/nav': typeof NavRouteWithChildren
   '/photos': typeof PhotosRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
@@ -190,6 +208,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/blocking'
+    | '/blocking-component'
     | '/nav'
     | '/photos'
     | '/posts'
@@ -210,6 +230,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/blocking'
+    | '/blocking-component'
     | '/photos'
     | '/dashboard'
     | '/nav/redirect'
@@ -229,6 +251,8 @@ export interface FileRouteTypes {
     | '/'
     | '/_pathlessLayout'
     | '/about'
+    | '/blocking'
+    | '/blocking-component'
     | '/nav'
     | '/photos'
     | '/posts'
@@ -251,6 +275,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
   AboutRoute: typeof AboutRoute
+  BlockingRoute: typeof BlockingRoute
+  BlockingComponentRoute: typeof BlockingComponentRoute
   NavRoute: typeof NavRouteWithChildren
   PhotosRoute: typeof PhotosRouteWithChildren
   PostsRoute: typeof PostsRouteWithChildren
@@ -280,6 +306,20 @@ declare module '@tanstack/react-router' {
       path: '/nav'
       fullPath: '/nav'
       preLoaderRoute: typeof NavRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blocking-component': {
+      id: '/blocking-component'
+      path: '/blocking-component'
+      fullPath: '/blocking-component'
+      preLoaderRoute: typeof BlockingComponentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blocking': {
+      id: '/blocking'
+      path: '/blocking'
+      fullPath: '/blocking'
+      preLoaderRoute: typeof BlockingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -476,6 +516,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
   AboutRoute: AboutRoute,
+  BlockingRoute: BlockingRoute,
+  BlockingComponentRoute: BlockingComponentRoute,
   NavRoute: NavRouteWithChildren,
   PhotosRoute: PhotosRouteWithChildren,
   PostsRoute: PostsRouteWithChildren,
