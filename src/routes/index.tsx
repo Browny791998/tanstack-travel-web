@@ -34,6 +34,14 @@ function Home() {
 				<li>
 					<Link to="/nav">/nav — navigation guide examples</Link>
 				</li>
+				<li>
+					<Link
+						to="/shop/products"
+						search={{ page: 2, filter: "shoes", sort: "price", tags: [] }}
+					>
+						/shop/products — search params examples
+					</Link>
+				</li>
 			</ul>
 			<p className="mt-4 text-sm text-gray-500">
 				Also try visiting these directly in the address bar:
