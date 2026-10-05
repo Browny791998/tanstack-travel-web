@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ScrollRouteImport } from './routes/scroll'
 import { Route as PostsRouteImport } from './routes/posts'
 import { Route as PhotosRouteImport } from './routes/photos'
 import { Route as NavRouteImport } from './routes/nav'
@@ -20,6 +21,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostsIndexRouteImport } from './routes/posts.index'
 import { Route as NavIndexRouteImport } from './routes/nav.index'
 import { Route as ShopProductsRouteImport } from './routes/shop.products'
+import { Route as ScrollItemItemIdRouteImport } from './routes/scroll-item.$itemId'
 import { Route as ProductsChar123CategoryChar125RouteImport } from './routes/products.{-$category}'
 import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
 import { Route as PostsSplatRouteImport } from './routes/posts.$'
@@ -31,6 +33,11 @@ import { Route as ShopProductsProductIdRouteImport } from './routes/shop.product
 import { Route as PostsPostIdEditRouteImport } from './routes/posts_.$postId.edit'
 import { Route as PhotosPhotoIdModalRouteImport } from './routes/photos.$photoId.modal'
 
+const ScrollRoute = ScrollRouteImport.update({
+  id: '/scroll',
+  path: '/scroll',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsRoute = PostsRouteImport.update({
   id: '/posts',
   path: '/posts',
@@ -83,6 +90,11 @@ const NavIndexRoute = NavIndexRouteImport.update({
 const ShopProductsRoute = ShopProductsRouteImport.update({
   id: '/shop/products',
   path: '/shop/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScrollItemItemIdRoute = ScrollItemItemIdRouteImport.update({
+  id: '/scroll-item/$itemId',
+  path: '/scroll-item/$itemId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsChar123CategoryChar125Route =
@@ -145,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/nav': typeof NavRouteWithChildren
   '/photos': typeof PhotosRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
+  '/scroll': typeof ScrollRoute
   '/dashboard': typeof PathlessLayoutDashboardRoute
   '/nav/redirect': typeof NavRedirectRoute
   '/nav/search': typeof NavSearchRoute
@@ -152,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
+  '/scroll-item/$itemId': typeof ScrollItemItemIdRoute
   '/shop/products': typeof ShopProductsRouteWithChildren
   '/nav/': typeof NavIndexRoute
   '/posts/': typeof PostsIndexRoute
@@ -165,6 +179,7 @@ export interface FileRoutesByTo {
   '/blocking': typeof BlockingRoute
   '/blocking-component': typeof BlockingComponentRoute
   '/photos': typeof PhotosRouteWithChildren
+  '/scroll': typeof ScrollRoute
   '/dashboard': typeof PathlessLayoutDashboardRoute
   '/nav/redirect': typeof NavRedirectRoute
   '/nav/search': typeof NavSearchRoute
@@ -172,6 +187,7 @@ export interface FileRoutesByTo {
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
+  '/scroll-item/$itemId': typeof ScrollItemItemIdRoute
   '/shop/products': typeof ShopProductsRouteWithChildren
   '/nav': typeof NavIndexRoute
   '/posts': typeof PostsIndexRoute
@@ -189,6 +205,7 @@ export interface FileRoutesById {
   '/nav': typeof NavRouteWithChildren
   '/photos': typeof PhotosRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
+  '/scroll': typeof ScrollRoute
   '/_pathlessLayout/dashboard': typeof PathlessLayoutDashboardRoute
   '/nav/redirect': typeof NavRedirectRoute
   '/nav/search': typeof NavSearchRoute
@@ -196,6 +213,7 @@ export interface FileRoutesById {
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/products/{-$category}': typeof ProductsChar123CategoryChar125Route
+  '/scroll-item/$itemId': typeof ScrollItemItemIdRoute
   '/shop/products': typeof ShopProductsRouteWithChildren
   '/nav/': typeof NavIndexRoute
   '/posts/': typeof PostsIndexRoute
@@ -213,6 +231,7 @@ export interface FileRouteTypes {
     | '/nav'
     | '/photos'
     | '/posts'
+    | '/scroll'
     | '/dashboard'
     | '/nav/redirect'
     | '/nav/search'
@@ -220,6 +239,7 @@ export interface FileRouteTypes {
     | '/posts/$'
     | '/posts/$postId'
     | '/products/{-$category}'
+    | '/scroll-item/$itemId'
     | '/shop/products'
     | '/nav/'
     | '/posts/'
@@ -233,6 +253,7 @@ export interface FileRouteTypes {
     | '/blocking'
     | '/blocking-component'
     | '/photos'
+    | '/scroll'
     | '/dashboard'
     | '/nav/redirect'
     | '/nav/search'
@@ -240,6 +261,7 @@ export interface FileRouteTypes {
     | '/posts/$'
     | '/posts/$postId'
     | '/products/{-$category}'
+    | '/scroll-item/$itemId'
     | '/shop/products'
     | '/nav'
     | '/posts'
@@ -256,6 +278,7 @@ export interface FileRouteTypes {
     | '/nav'
     | '/photos'
     | '/posts'
+    | '/scroll'
     | '/_pathlessLayout/dashboard'
     | '/nav/redirect'
     | '/nav/search'
@@ -263,6 +286,7 @@ export interface FileRouteTypes {
     | '/posts/$'
     | '/posts/$postId'
     | '/products/{-$category}'
+    | '/scroll-item/$itemId'
     | '/shop/products'
     | '/nav/'
     | '/posts/'
@@ -280,13 +304,22 @@ export interface RootRouteChildren {
   NavRoute: typeof NavRouteWithChildren
   PhotosRoute: typeof PhotosRouteWithChildren
   PostsRoute: typeof PostsRouteWithChildren
+  ScrollRoute: typeof ScrollRoute
   ProductsChar123CategoryChar125Route: typeof ProductsChar123CategoryChar125Route
+  ScrollItemItemIdRoute: typeof ScrollItemItemIdRoute
   ShopProductsRoute: typeof ShopProductsRouteWithChildren
   PostsPostIdEditRoute: typeof PostsPostIdEditRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/scroll': {
+      id: '/scroll'
+      path: '/scroll'
+      fullPath: '/scroll'
+      preLoaderRoute: typeof ScrollRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/posts': {
       id: '/posts'
       path: '/posts'
@@ -362,6 +395,13 @@ declare module '@tanstack/react-router' {
       path: '/shop/products'
       fullPath: '/shop/products'
       preLoaderRoute: typeof ShopProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scroll-item/$itemId': {
+      id: '/scroll-item/$itemId'
+      path: '/scroll-item/$itemId'
+      fullPath: '/scroll-item/$itemId'
+      preLoaderRoute: typeof ScrollItemItemIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/{-$category}': {
@@ -521,7 +561,9 @@ const rootRouteChildren: RootRouteChildren = {
   NavRoute: NavRouteWithChildren,
   PhotosRoute: PhotosRouteWithChildren,
   PostsRoute: PostsRouteWithChildren,
+  ScrollRoute: ScrollRoute,
   ProductsChar123CategoryChar125Route: ProductsChar123CategoryChar125Route,
+  ScrollItemItemIdRoute: ScrollItemItemIdRoute,
   ShopProductsRoute: ShopProductsRouteWithChildren,
   PostsPostIdEditRoute: PostsPostIdEditRoute,
 }

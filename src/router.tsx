@@ -23,6 +23,8 @@ export function getRouter() {
 	return createTanStackRouter({
 		routeTree,
 		routeMasks: [photoModalToPhotoMask],
+		scrollRestoration: true,
+		scrollRestorationBehavior: "instant",
 		rewrite: {
 			// Browser URL (/en/about) -> router's internal URL (/about)
 			input: ({ url }) => {
