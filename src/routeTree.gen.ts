@@ -13,6 +13,7 @@ import { Route as ScrollRouteImport } from './routes/scroll'
 import { Route as PostsRouteImport } from './routes/posts'
 import { Route as PhotosRouteImport } from './routes/photos'
 import { Route as NavRouteImport } from './routes/nav'
+import { Route as DataRouteImport } from './routes/data'
 import { Route as BlockingComponentRouteImport } from './routes/blocking-component'
 import { Route as BlockingRouteImport } from './routes/blocking'
 import { Route as AboutRouteImport } from './routes/about'
@@ -51,6 +52,11 @@ const PhotosRoute = PhotosRouteImport.update({
 const NavRoute = NavRouteImport.update({
   id: '/nav',
   path: '/nav',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataRoute = DataRouteImport.update({
+  id: '/data',
+  path: '/data',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlockingComponentRoute = BlockingComponentRouteImport.update({
@@ -154,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/blocking': typeof BlockingRoute
   '/blocking-component': typeof BlockingComponentRoute
+  '/data': typeof DataRoute
   '/nav': typeof NavRouteWithChildren
   '/photos': typeof PhotosRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
@@ -178,6 +185,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/blocking': typeof BlockingRoute
   '/blocking-component': typeof BlockingComponentRoute
+  '/data': typeof DataRoute
   '/photos': typeof PhotosRouteWithChildren
   '/scroll': typeof ScrollRoute
   '/dashboard': typeof PathlessLayoutDashboardRoute
@@ -202,6 +210,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/blocking': typeof BlockingRoute
   '/blocking-component': typeof BlockingComponentRoute
+  '/data': typeof DataRoute
   '/nav': typeof NavRouteWithChildren
   '/photos': typeof PhotosRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
@@ -228,6 +237,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/blocking'
     | '/blocking-component'
+    | '/data'
     | '/nav'
     | '/photos'
     | '/posts'
@@ -252,6 +262,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/blocking'
     | '/blocking-component'
+    | '/data'
     | '/photos'
     | '/scroll'
     | '/dashboard'
@@ -275,6 +286,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/blocking'
     | '/blocking-component'
+    | '/data'
     | '/nav'
     | '/photos'
     | '/posts'
@@ -301,6 +313,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BlockingRoute: typeof BlockingRoute
   BlockingComponentRoute: typeof BlockingComponentRoute
+  DataRoute: typeof DataRoute
   NavRoute: typeof NavRouteWithChildren
   PhotosRoute: typeof PhotosRouteWithChildren
   PostsRoute: typeof PostsRouteWithChildren
@@ -339,6 +352,13 @@ declare module '@tanstack/react-router' {
       path: '/nav'
       fullPath: '/nav'
       preLoaderRoute: typeof NavRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data': {
+      id: '/data'
+      path: '/data'
+      fullPath: '/data'
+      preLoaderRoute: typeof DataRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blocking-component': {
@@ -558,6 +578,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BlockingRoute: BlockingRoute,
   BlockingComponentRoute: BlockingComponentRoute,
+  DataRoute: DataRoute,
   NavRoute: NavRouteWithChildren,
   PhotosRoute: PhotosRouteWithChildren,
   PostsRoute: PostsRouteWithChildren,

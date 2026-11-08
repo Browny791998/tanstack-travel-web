@@ -58,6 +58,11 @@ function Home() {
 				<li>
 					<Link to="/scroll">/scroll — scroll restoration examples</Link>
 				</li>
+				<li>
+					<Link to="/data" search={{ offset: 0, limit: 2 }}>
+						/data — data loading examples
+					</Link>
+				</li>
 			</ul>
 			<p className="mt-4 text-sm text-gray-500">
 				Also try visiting these directly in the address bar:
