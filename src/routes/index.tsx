@@ -4,6 +4,7 @@ import { ArrayKeysWithVariablesSection } from "../components/ArrayKeysWithVariab
 import { CacheInspector } from "../components/CacheInspector";
 import { DeterministicHashingSection } from "../components/DeterministicHashingSection";
 import { Header } from "../components/Header";
+import { QueryOptionsSection } from "../components/QueryOptionsSection";
 import { SimpleKeysSection } from "../components/SimpleKeysSection";
 import { VariableDependencySection } from "../components/VariableDependencySection";
 import { supabase } from "../lib/supabase";
@@ -88,7 +89,10 @@ function QueryKeysShowcase() {
 				{/* Section 4: Variable Dependency */}
 				<VariableDependencySection />
 
-				{/* Section 5: Live Cache Inspector */}
+				{/* Section 5: Type-Safe queryOptions */}
+				<QueryOptionsSection />
+
+				{/* Live Cache Inspector */}
 				<CacheInspector />
 			</main>
 
