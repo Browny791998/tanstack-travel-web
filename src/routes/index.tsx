@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { ArrayKeysWithVariablesSection } from "../components/ArrayKeysWithVariablesSection";
 import { CacheInspector } from "../components/CacheInspector";
+import { DependentQueriesSection } from "../components/DependentQueriesSection";
 import { DeterministicHashingSection } from "../components/DeterministicHashingSection";
 import { Header } from "../components/Header";
 import { QueryOptionsSection } from "../components/QueryOptionsSection";
@@ -91,6 +92,9 @@ function QueryKeysShowcase() {
 
 				{/* Section 5: Type-Safe queryOptions */}
 				<QueryOptionsSection />
+
+				{/* Section 6: Dependent (Serial) Queries */}
+				<DependentQueriesSection />
 
 				{/* Live Cache Inspector */}
 				<CacheInspector />
