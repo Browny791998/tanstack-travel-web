@@ -5,6 +5,7 @@ import { CacheInspector } from "../components/CacheInspector";
 import { DependentQueriesSection } from "../components/DependentQueriesSection";
 import { DeterministicHashingSection } from "../components/DeterministicHashingSection";
 import { Header } from "../components/Header";
+import { PollingSection } from "../components/PollingSection";
 import { QueryOptionsSection } from "../components/QueryOptionsSection";
 import { SimpleKeysSection } from "../components/SimpleKeysSection";
 import { VariableDependencySection } from "../components/VariableDependencySection";
@@ -95,6 +96,9 @@ function QueryKeysShowcase() {
 
 				{/* Section 6: Dependent (Serial) Queries */}
 				<DependentQueriesSection />
+
+				{/* Section 7: Real-Time Polling */}
+				<PollingSection />
 
 				{/* Live Cache Inspector */}
 				<CacheInspector />
